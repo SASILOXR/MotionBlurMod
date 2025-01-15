@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
-public class MotionBlurManager implements IResourceManager {
+public class MotionBlurPostManager implements IResourceManager {
 
     @Override
     public Set<String> getResourceDomains() {
@@ -17,7 +17,7 @@ public class MotionBlurManager implements IResourceManager {
 
     @Override
     public IResource getResource(ResourceLocation location) throws IOException {
-        return new MotionBlurResource();
+        return new MotionBlurPostResource();
     }
 
     @Override

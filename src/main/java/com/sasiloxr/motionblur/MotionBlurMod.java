@@ -1,11 +1,13 @@
 package com.sasiloxr.motionblur;
 
 import com.sasiloxr.motionblur.command.CommandMotionBlur;
-import com.sasiloxr.motionblur.resource.MotionBlurManager;
+import com.sasiloxr.motionblur.resource.MotionBlurPostManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.SimpleReloadableResourceManager;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -14,6 +16,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
+import java.io.File;
 import java.lang.reflect.Field;
 import java.util.Map;
 
@@ -24,6 +27,12 @@ public class MotionBlurMod {
     public static final String NAME = "MotionBlur";
     private Map domainResourceManager;
     Minecraft mc = Minecraft.getMinecraft();
+    public boolean isNew = true;
+    public double blurMount = 6;
+    public boolean enabled = false;
+    private File configFile;
+    private Configuration config;
+    private static boolean init;
 
 
     @Mod.Instance(MotionBlurMod.MODID)
@@ -31,18 +40,45 @@ public class MotionBlurMod {
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
+        this.configFile = event.getSuggestedConfigurationFile();
     }
 
     @EventHandler
     public void init(FMLInitializationEvent event) {
-        MinecraftForge.EVENT_BUS.register(this);
         ClientCommandHandler.instance.registerCommand(new CommandMotionBlur());
+        config = new Configuration(this.configFile);
+        loadConfig();
+        MinecraftForge.EVENT_BUS.register(this);
     }
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
     }
 
+    public void saveConfig() {
+        updateConfig(config, false);
+        config.save();
+    }
+
+    private void loadConfig() {
+        config.load();
+        updateConfig(config, true);
+    }
+
+    private void updateConfig(Configuration config, boolean load) {
+        Property prop1 = config.get("MotionBlur", "isNew", true);
+        Property prop2 = config.get("MotionBlur", "blurMount", 0);
+        Property prop3 = config.get("MotionBlur", "enabled", false);
+        if (!load) {
+            prop3.setValue(INSTANCE.enabled);
+            prop2.setValue(INSTANCE.blurMount);
+            prop1.setValue(INSTANCE.isNew);
+        } else {
+            INSTANCE.enabled = prop3.getBoolean();
+            INSTANCE.blurMount = prop2.getInt();
+            INSTANCE.isNew = prop1.getBoolean();
+        }
+    }
 
     @SubscribeEvent
     public void onClientTick(TickEvent.ClientTickEvent event) {
@@ -59,7 +95,9 @@ public class MotionBlurMod {
             }
         }
         if (!this.domainResourceManager.containsKey("motionblur")) {
-            this.domainResourceManager.put("motionblur", new MotionBlurManager());
+            this.domainResourceManager.put("motionblur", new MotionBlurPostManager());
         }
+
     }
+
 }
