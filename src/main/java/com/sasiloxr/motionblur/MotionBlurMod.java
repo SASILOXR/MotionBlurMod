@@ -33,7 +33,6 @@ public class MotionBlurMod {
     public boolean enabled = false;
     private File configFile;
     private Configuration config;
-    private static boolean firstLoad = true;
 
 
     @Mod.Instance(MotionBlurMod.MODID)
@@ -100,10 +99,8 @@ public class MotionBlurMod {
                 this.domainResourceManager.put("motionblur", new MotionBlurPostManager());
             }
 
-            if (MotionBlurMod.INSTANCE.enabled && !mc.entityRenderer.isShaderActive() && mc.inGameHasFocus && firstLoad) {
-                mc.entityRenderer.setupOverlayRendering();
+            if (MotionBlurMod.INSTANCE.enabled && !mc.entityRenderer.isShaderActive() && mc.inGameHasFocus) {
                 mc.entityRenderer.loadShader(new ResourceLocation("motionblur", "motionblur"));
-                firstLoad = false;
             }
         }
 

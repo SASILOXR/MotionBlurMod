@@ -9,9 +9,6 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.apache.commons.lang3.math.NumberUtils;
 
 public class CommandMotionBlur extends CommandBase {
@@ -68,7 +65,6 @@ public class CommandMotionBlur extends CommandBase {
                 shaderGroup.deleteShaderGroup();
             }
             mc.entityRenderer.loadShader(new ResourceLocation("motionblur", "motionblur"));
-            MinecraftForge.EVENT_BUS.register(this);
             MotionBlurMod.INSTANCE.enabled = true;
             MotionBlurMod.INSTANCE.saveConfig();
             IChatComponent imsg = new ChatComponentText("MotionBlur enabled");
@@ -79,16 +75,5 @@ public class CommandMotionBlur extends CommandBase {
     @Override
     public boolean canCommandSenderUseCommand(ICommandSender sender) {
         return true;
-    }
-
-    @SubscribeEvent
-    public void onClientTick(TickEvent.ClientTickEvent event) {
-        if (MotionBlurMod.INSTANCE.enabled && !mc.entityRenderer.isShaderActive() && mc.inGameHasFocus) {
-            ShaderGroup shaderGroup = this.mc.entityRenderer.getShaderGroup();
-            if (shaderGroup != null) {
-                shaderGroup.deleteShaderGroup();
-            }
-            mc.entityRenderer.loadShader(new ResourceLocation("motionblur", "motionblur"));
-        }
     }
 }
