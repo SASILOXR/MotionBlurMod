@@ -1,14 +1,14 @@
 [
 {
-  "modid": "examplemod",
-  "name": "Example Mod",
-  "description": "Example placeholder mod.",
+  "modid": "NewMotionBlur",
+  "name": "NewMotionBlur Mod",
+  "description": "Provide a new version of motionblur",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authorList": ["ExampleDude"],
-  "credits": "The Forge and FML guys, for making this example",
+  "authorList": ["Ewimo"],
+  "credits": "none",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []
