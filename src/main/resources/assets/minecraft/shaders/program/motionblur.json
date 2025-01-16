@@ -5,7 +5,7 @@
     "dstrgb": "zero"
   },
   "vertex": "sobel",
-  "fragment": "blc_motionblur",
+  "fragment": "motionblur",
   "attributes": [
     "Position"
   ],

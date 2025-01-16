@@ -98,7 +98,6 @@ public class MotionBlurMod {
             }
             if (!this.domainResourceManager.containsKey("motionblur")) {
                 this.domainResourceManager.put("motionblur", new MotionBlurPostManager());
-                System.out.println("add resource");
             }
 
             if (MotionBlurMod.INSTANCE.enabled && !mc.entityRenderer.isShaderActive() && mc.inGameHasFocus && firstLoad) {
