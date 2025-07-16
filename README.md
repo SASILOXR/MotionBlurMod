@@ -6,7 +6,7 @@ it can provide old motionblur and new motionblur(like lunar client and blc v2)
 
 # Usage
 
-send command /motionblur [old/new] [blurMount]
+send command /motionblur [old/new] [blurMount/adapt lowMount lowFPS highMount highFPS]
 
 remember close your fastrender
 
@@ -17,3 +17,5 @@ When switching perspectives, the screen will go black for 1-2 frames
 because the game will close shader when switching perspectives
 
 Even though the mod will reload the shader, there will be a gap
+
+how to fix: you can use patcher and there are a setting can keep shader when switching perspectives

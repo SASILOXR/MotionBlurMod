@@ -28,7 +28,7 @@ public class CommandMotionBlur extends CommandBase {
     @Override
     public void processCommand(ICommandSender sender, String[] args) throws CommandException {
         if (args.length < 1) {
-            sender.addChatMessage(new ChatComponentText("Usage: /motionblur [old/new] [0-9]"));
+            sender.addChatMessage(new ChatComponentText("Usage: /motionblur [old/new] [0-9/adapt lowMount lowFPS highMount highFPS]"));
         } else {
             boolean oldBlur = args[0].equals("old");
             boolean newBlur = args[0].equals("new");

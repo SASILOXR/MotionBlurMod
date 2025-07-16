@@ -23,6 +23,10 @@ void main() {
     	gl_FragColor = vec4(max(PrevTexel.rgb * vec3(factor), CurrTexel.rgb), 1.0);
     }
     else {
-    	gl_FragColor = vec4(mix(PrevTexel.rgb, CurrTexel.rgb, factor), 1.0);
+      if (CurrTexel.rgb == PrevTexel.rgb) {
+        gl_FragColor = vec4(CurrTexel.rgb, 1.0);
+      } else {
+        gl_FragColor = vec4(mix(PrevTexel.rgb, CurrTexel.rgb, factor), 1.0);
+      }
     }
 }
