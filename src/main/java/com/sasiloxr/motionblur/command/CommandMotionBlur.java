@@ -45,6 +45,36 @@ public class CommandMotionBlur extends CommandBase {
                 MotionBlurMod.INSTANCE.isNew = true;
             }
 
+            boolean adaptMode = args[1].equals("adapt");
+
+            if (adaptMode) {
+              int lowMount = NumberUtils.toInt(args[2], -1);
+              int lowFPS = NumberUtils.toInt(args[3], -1);
+              int highMount = NumberUtils.toInt(args[4], -1);
+              int highFPS = NumberUtils.toInt(args[5], -1);
+              
+              MotionBlurMod.INSTANCE.lowMount = lowMount;
+              MotionBlurMod.INSTANCE.highMount = highMount;
+              MotionBlurMod.INSTANCE.lowFPS = lowFPS;
+              MotionBlurMod.INSTANCE.highFPS = highFPS;
+              MotionBlurMod.INSTANCE.adaptMode = true;
+
+            } else {
+              int blurMount = NumberUtils.toInt(args[1], -1);
+              if (blurMount > 9 || blurMount < 0) {
+                  sender.addChatMessage(new ChatComponentText("Invalid Mount"));
+                  return;
+              }
+              MotionBlurMod.INSTANCE.blurMount = blurMount;
+
+              if (blurMount == 0) {
+                  mc.entityRenderer.stopUseShader();
+                  MotionBlurMod.INSTANCE.enabled = false;
+                  MotionBlurMod.INSTANCE.saveConfig();
+                  return;
+              }
+            }
+
             int blurMount = NumberUtils.toInt(args[1], -1);
             if (blurMount > 9 || blurMount < 0) {
                 sender.addChatMessage(new ChatComponentText("Invalid Mount"));
